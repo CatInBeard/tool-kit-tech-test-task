@@ -13,23 +13,40 @@ class UserService
     /**
      * @throws ErrorJsonException
      */
-    public function create($name, $email, $password)
+    public function create()
     {
-        try {
-            return User::create(compact('name', 'email', 'password'));
-        } catch (Exception $e) {
-            throw new ErrorJsonException('could not create user', 500);
+        throw new ErrorJsonException('could not create user, you should use questionary instead', 403);
+    }
+
+    /**
+     * @throws ErrorJsonException
+     */
+    public function get($limit = 100, $page = 1, $filters = []): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        $query = User::query();
+
+        foreach ($filters as $field => $value) {
+            if (!empty($value)) {
+                $query->where($field, 'LIKE', '%' . $value . '%');
+            }
         }
+
+        return $query->paginate($limit, ['*'], 'page', $page);
     }
 
-    public function getAll(): \Illuminate\Database\Eloquent\Collection
-    {
-        return User::all();
-    }
-
+    /**
+     * @throws ErrorJsonException
+     */
     public function getById($id)
     {
-        return User::findOrFail($id);
+        $currentUser = Auth::user();
+        $user = User::findOrFail($id);
+        if(!$this->isAuthorizeToAccess($currentUser, $user)){
+            throw new ErrorJsonException('Unauthorized to to access this user', 403);
+        }
+
+        return $user;
+
     }
 
     /**
@@ -40,7 +57,7 @@ class UserService
         $user = $this->getById($id);
         $currentUser = Auth::user();
 
-        if(!$this->isAuthorizeUpdate($currentUser, $user)){
+        if(!$this->isAuthorizeToAccess($currentUser, $user)){
             throw new ErrorJsonException('unauthorized to update this user', 403);
         }
 
@@ -68,7 +85,7 @@ class UserService
         return $user;
     }
 
-    private function isAuthorizeUpdate($currentUser, $user): bool
+    private function isAuthorizeToAccess($currentUser, $user): bool
     {
         return $this->isCurrentUser($currentUser, $user) && $currentUser->isAdmin();
     }

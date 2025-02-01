@@ -117,4 +117,40 @@ class QuestionaryServiceTest extends TestCase
 
         $this->questionaryService->delete(1);
     }
+
+    #[RunInSeparateProcess] #[PreserveGlobalState(false)] public function testConfirmQuestionaryFailed()
+    {
+        $this->expectException(ErrorJsonException::class);
+
+
+        $user = Mockery::mock(User::class);
+        $user->shouldReceive('isAdmin')
+            ->once()
+            ->andReturn(false);
+        Auth::shouldReceive('user')->andReturn($user);
+
+        $this->questionaryService->confirm(1);
+    }
+
+    #[RunInSeparateProcess] #[PreserveGlobalState(false)] public function testConfirmQuestionarySuccess()
+    {
+        $questionaryMock = Mockery::mock('alias:' . Questionary::class);
+        $questionaryMock->shouldReceive('findOrFail')
+            ->once()
+            ->andReturn($questionaryMock);
+
+        $user = Mockery::mock('alias:' . User::class);
+        $user->shouldReceive('isAdmin')
+            ->once()
+            ->andReturn(true);
+        Auth::shouldReceive('user')->andReturn($user);
+
+        $user->shouldReceive('createFromQuestionary')
+            ->once()
+            ->andReturn($user);
+
+        $this->questionaryService->confirm(1);
+
+
+    }
 }

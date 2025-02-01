@@ -9,6 +9,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('auth', [AuthController::class, 'delete'])->name('auth.delete');
     Route::apiResource('users', UserController::class)->except('store');
     Route::apiResource('questionary', QuestionaryController::class)->except('store');
+    Route::post('questionary/{id}/confirm', [QuestionaryController::class, 'confirm'])->name('questionary.confirm');
 });
 
 Route::middleware('throttle:10,1')->group(function () {

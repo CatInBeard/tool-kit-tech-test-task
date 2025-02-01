@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\ErrorJsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\QuestionaryIndexRequest;
-use App\Http\Requests\QuestionaryRequest; // Создайте этот Request для валидации
+use App\Http\Requests\QuestionaryCreateRequest; // Создайте этот Request для валидации
+use App\Http\Requests\QuestionaryUpdateRequest;
 use App\Services\QuestionaryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class QuestionaryController extends Controller
     /**
      * @throws ErrorJsonException
      */
-    public function store(QuestionaryRequest $request): JsonResponse
+    public function store(QuestionaryCreateRequest $request): JsonResponse
     {
         try {
             $catPhotoPath = null;
@@ -50,6 +51,12 @@ class QuestionaryController extends Controller
         }
     }
 
+    public function confirm($id): JsonResponse
+    {
+        $this->questionaryService->confirm($id);
+        return response()->json(['message' => 'confirmed'], 201);
+    }
+
     /**
      * @throws ErrorJsonException
      */
@@ -71,7 +78,7 @@ class QuestionaryController extends Controller
         return response()->json($questionary);
     }
 
-    public function update(QuestionaryRequest $request, $id): JsonResponse
+    public function update(QuestionaryUpdateRequest $request, $id): JsonResponse
     {
         try {
             $data = $request->validated();

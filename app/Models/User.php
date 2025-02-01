@@ -23,6 +23,15 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'tg_name',
+        'phone'
+    ];
+
+    protected $filters = [
+        'name',
+        'email',
+        'phone',
+        'tg_name',
     ];
 
     /**
@@ -68,5 +77,22 @@ class User extends Authenticatable implements JWTSubject
     public function questionaries(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Questionary::class);
+    }
+
+    public static function createFromQuestionary(Questionary $questionary)
+    {
+
+        return self::create([
+            'name' => $questionary->name,
+            'email' => $questionary->email,
+            'password' => $questionary->password,
+            'tg_name' => $questionary->tg_name,
+            'phone' => $questionary->phone,
+        ]);
+    }
+
+    public function getFilters()
+    {
+        return $this->filters;
     }
 }

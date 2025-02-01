@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\ErrorJsonException;
 use App\Models\Questionary;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ class QuestionaryService
     public function get($limit = 100, $page = 1, $filters = []): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         $currentUser = Auth::user();
-        if($currentUser->isAdmin()) {
+        if(!$currentUser->isAdmin()) {
             throw new ErrorJsonException('Unauthorized to list questionaries', 403);
         }
         $query = Questionary::query();
@@ -64,7 +65,7 @@ class QuestionaryService
     {
         $questionary =  Questionary::findOrFail($id);
         $currentUser = Auth::user();
-        if (!$currentUser->isAdmin()) {
+        if (!$currentUser->isAdmin() && $currentUser->id != $questionary->user_id) {
             throw new ErrorJsonException('Unauthorized to update questionary', 403);
         }
 
@@ -89,5 +90,20 @@ class QuestionaryService
         $questionary = $this->getById($id);
 
         $questionary->delete();
+    }
+
+    /**
+     * @throws ErrorJsonException
+     */
+    public function confirm($id)
+    {
+        $currentUser = Auth::user();
+        if (!$currentUser->isAdmin()){
+            throw new ErrorJsonException('Unauthorized to confirm', 403);
+        }
+
+        $questionary =  Questionary::findOrFail($id);
+
+        return User::createFromQuestionary($questionary);
     }
 }
