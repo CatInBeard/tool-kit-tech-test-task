@@ -59,4 +59,14 @@ class User extends Authenticatable implements JWTSubject
             'role' => $this->role,
         ];
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function questionaries(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Questionary::class);
+    }
 }

@@ -2,47 +2,43 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\CustomJsonException;
+use App\Exceptions\ErrorJsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    protected $authService;
+    protected AuthService $authService;
 
     public function __construct(AuthService $authService)
     {
         $this->authService = $authService;
     }
 
-    public function store(LoginRequest $request)
+    /**
+     * @throws ErrorJsonException
+     */
+    public function store(LoginRequest $request): \Illuminate\Http\JsonResponse
     {
-        try{
-            $token = $this->authService->login(
-                $request->email,
-                $request->password
-            );
-        }
-        catch(CustomJsonException $e){
-            return $e->render();
-        }
+
+        $token = $this->authService->login(
+            $request->email,
+            $request->password
+        );
 
         return response()->json(compact('token'));
 
     }
 
-    public function delete(Request $request)
+    /**
+     * @throws ErrorJsonException
+     */
+    public function delete(Request $request): \Illuminate\Http\JsonResponse
     {
-        try{
-            $this->authService->logout();
-        }
-        catch(CustomJsonException $e){
-            return $e->render();
-        }
+        $this->authService->logout();
+
         return response()->json(['message' => 'User logged out successfully']);
     }
 }

@@ -17,7 +17,6 @@ class AuthTest extends TestCase
     {
         parent::setUp();
 
-        // Создаем пользователя для тестов
         $this->user = User::factory()->create([
             'name' => 'testUser',
             'email' => 'testUser@test.com',
