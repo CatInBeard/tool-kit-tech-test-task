@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use App\Exceptions\ErrorJsonException;
+use App\Mail\UserRegistered;
 use App\Models\Questionary;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class QuestionaryService
 {
@@ -106,6 +108,7 @@ class QuestionaryService
 
         $user = User::createFromQuestionary($questionary);
 
+        Mail::to($user->email)->queue(new UserRegistered($user));
 
         $questionary->user_id = $user->id;
     }
