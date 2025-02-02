@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import ListQuestionary from "./listQuestionary.jsx";
 
 const Home = ({setPage, getToken}) => {
 
@@ -163,6 +164,7 @@ const Home = ({setPage, getToken}) => {
 
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
+            {formData.role === "admin" && <ListQuestionary setPage={setPage} getToken={getToken}/>}
         </div>
     );
 };
