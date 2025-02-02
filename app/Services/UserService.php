@@ -76,7 +76,7 @@ class UserService
     /**
      * @throws ErrorJsonException
      */
-    public function delete($id)
+    public function delete($id): void
     {
         $currentUser = Auth::user();
 
@@ -86,7 +86,6 @@ class UserService
 
         $user = User::findOrFail($id);
         $user->delete();
-        return $user;
     }
 
     private function isAuthorizeToAccess($currentUser, $id): bool

@@ -22,6 +22,41 @@ class QuestionaryController extends Controller
     }
 
     /**
+     * @group Questionary Management
+     *
+     * APIs for managing users
+     */
+
+
+    /**
+     * Create questionary
+     *
+     * You can create questionary to create a user
+     *
+     *
+     * @response 201 {
+     * "id": 1,
+     * "name": "John Doe",
+     * "email": "john@example.com"
+     * "tg_name": "johnDoe"
+     * "phone": "9998887766",
+     * "cat_photo" "http://example.com/image.jpg"
+     * }
+     *
+     * @response 401 {
+     * "error": "Unauthenticated"
+     * }
+     * @response 403 {
+     * "error": "Unauthorized"
+     * }
+     *
+     * @bodyParam name string optional required The name of the user.
+     * @bodyParam email string optional required The email of the user.
+     * @bodyParam password string optional The password of the user.
+     * @bodyParam tg_name string optional The telegram username of the user.
+     * @bodyParam phone string optional The phone number of the user.
+     * @bodyParam cat_photo file required The cat photo to upload. Must be an image and less than 8 MB.
+     *
      * @throws ErrorJsonException
      */
     public function store(QuestionaryCreateRequest $request): JsonResponse
@@ -51,6 +86,26 @@ class QuestionaryController extends Controller
         }
     }
 
+    /**
+     * Confirm questionary
+     *
+     * Admin can confirm questionary to create a user
+     *
+     *
+     * @response 201 {
+     * "message": "confirmed",
+     * }
+     *
+     * @response 401 {
+     * "error": "Unauthenticated"
+     * }
+     * @response 403 {
+     * "error": "Unauthorized"
+     * }
+     *
+     *
+     * @throws ErrorJsonException
+     */
     public function confirm($id): JsonResponse
     {
         $this->questionaryService->confirm($id);
@@ -58,7 +113,28 @@ class QuestionaryController extends Controller
     }
 
     /**
-     * @throws ErrorJsonException
+     * Get a list of all questionary
+     *
+     * Available only for admin
+     *
+     * @header Authorization Bearer token
+     *
+     * @response 200 [{
+     *      "id": 1,
+     *      "name": "John Doe",
+     *      "email": "john@example.com"
+     *      "tg_name": "johnDoe"
+     *      "phone": "9998887766",
+     *      "cat_photo" "http://example.com/image.jpg"
+     * }]
+     *
+     * @response 401 {
+     *   "error": "Unauthenticated"
+     * }
+     * @response 403 {
+     *   "error": "Unauthorized"
+     * }
+     *
      */
     public function index(QuestionaryIndexRequest $request): JsonResponse
     {
@@ -73,7 +149,28 @@ class QuestionaryController extends Controller
     }
 
     /**
-     * @throws ErrorJsonException
+     * Get questionary by id
+     *
+     * Available only for admin or to see yourself
+     *
+     * @header Authorization Bearer token
+     *
+     * @response 200 {
+     *      "id": 1,
+     *      "name": "John Doe",
+     *      "email": "john@example.com"
+     *      "tg_name": "johnDoe"
+     *      "phone": "9998887766",
+     *      "cat_photo" "http://example.com/image.jpg"
+     * }
+     *
+     * @response 401 {
+     *   "error": "Unauthenticated"
+     * }
+     * @response 403 {
+     *   "error": "Unauthorized"
+     * }
+     *
      */
     public function show($id): JsonResponse
     {
@@ -81,34 +178,80 @@ class QuestionaryController extends Controller
         return response()->json($questionary);
     }
 
+    /**
+     * Update questionary
+     *
+     * Available only for admin or to edit yourself
+     *
+     * @header Authorization Bearer token
+     *
+     * @response 200 {
+     *      "id": 1,
+     *      "name": "John Doe",
+     *      "email": "john@example.com"
+     *      "tg_name": "johnDoe"
+     *      "phone": "9998887766",
+     *      "cat_photo" "http://example.com/image.jpg"
+     * }
+     *
+     * @response 401 {
+     *   "error": "Unauthenticated"
+     * }
+     * @response 403 {
+     *   "error": "Unauthorized"
+     * }
+     *
+     *
+     * @bodyParam name string optional required The name of the user.
+     * @bodyParam email string optional required The email of the user.
+     * @bodyParam password string optional The password of the user.
+     * @bodyParam tg_name string optional The telegram username of the user.
+     * @bodyParam phone string optional The phone number of the user.
+     * @bodyParam cat_photo file required The cat photo to upload. Must be an image and less than 8 MB.
+     *
+     * @throws ErrorJsonException
+     */
     public function update(QuestionaryUpdateRequest $request, $id): JsonResponse
     {
-        try {
-            $data = $request->validated();
-            $catPhotoPath = null;
+        $data = $request->validated();
+        $catPhotoPath = null;
 
-            if ($request->hasFile('catPhoto')) {
-                $catPhotoPath = $request->file('catPhoto')->store('cat_photos', 'public');
-            }
-
-            if ($catPhotoPath) {
-                $data['cat_photo'] = $catPhotoPath;
-            }
-
-            $questionary = $this->questionaryService->update($id, $data);
-            return response()->json($questionary);
-        } catch (ErrorJsonException $e) {
-            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        if ($request->hasFile('catPhoto')) {
+            $catPhotoPath = $request->file('catPhoto')->store('cat_photos', 'public');
         }
+
+        if ($catPhotoPath) {
+            $data['cat_photo'] = $catPhotoPath;
+        }
+
+        $questionary = $this->questionaryService->update($id, $data);
+        return response()->json($questionary);
     }
+
+    /**
+     * Update questionary
+     *
+     * Available only for admin or to edit yourself
+     *
+     * @header Authorization Bearer token
+     *
+     * @response 204 {
+     *      "message": "successfully deleted",
+     * }
+     *
+     * @response 401 {
+     *   "error": "Unauthenticated"
+     * }
+     * @response 403 {
+     *   "error": "Unauthorized"
+     * }
+     *
+     * @throws ErrorJsonException
+     */
 
     public function destroy($id): JsonResponse
     {
-        try {
-            $this->questionaryService->delete($id);
-            return response()->json(["message" => "successfully deleted"], 204);
-        } catch (ErrorJsonException $e) {
-            return response()->json(['error' => $e->getMessage()], $e->getCode());
-        }
+        $this->questionaryService->delete($id);
+        return response()->json(["message" => "successfully deleted"], 204);
     }
 }

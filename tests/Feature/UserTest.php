@@ -109,7 +109,7 @@ class UserTest extends TestCase
             'Authorization' => 'Bearer ' . $this->tokenAdmin,
         ])->deleteJson(route('users.destroy', ['user' => $this->userToDelete->id]));
 
-        $response->assertStatus(200);
+        $response->assertStatus(204);
     }
 
     #[RunInSeparateProcess] #[PreserveGlobalState(false)]
@@ -119,7 +119,7 @@ class UserTest extends TestCase
             'Authorization' => 'Bearer ' . $this->token,
         ])->deleteJson(route('users.destroy', ['user' => $this->userId]));
 
-        $response->assertStatus(200);
+        $response->assertStatus(204);
     }
 
     #[RunInSeparateProcess] #[PreserveGlobalState(false)]

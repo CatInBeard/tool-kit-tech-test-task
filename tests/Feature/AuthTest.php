@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Exception;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -56,8 +57,7 @@ class AuthTest extends TestCase
 
         $response = $this->withHeaders(['Authorization' => "Bearer $token"])
             ->delete(route('auth.delete'));
-        $response->assertStatus(200);
-        $this->assertArrayHasKey('message', $response->json());
+        $response->assertStatus(204);
     }
 
     public function test_cannot_logout_without_token()

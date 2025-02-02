@@ -1,0 +1,924 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost"
+        }
+    ],
+    "info": {
+        "name": "Laravel",
+        "_postman_id": "2c789f75-3e20-42aa-a2f7-b723242f486a",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "Invoke jwt token",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth"
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"message\": \"User logged out successfully\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get my user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/me",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/me"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "You can see yourself",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get a list of users questionary",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/me\/questionary",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/me\/questionary"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "You can see your questionary if not admin",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "[{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\",\n     \"cat_photo\" \"http:\/\/example.com\/image.jpg\"\n}]",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get a list of users",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"limit\":11,\"page\":3,\"name\":\"qui\",\"email\":\"else.dibbert@example.com\",\"phone\":\"et\",\"tg_name\":\"quasi\"}"
+                        },
+                        "description": "Only users with admin role can use this endpoint",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "[\n   {\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\"\n   },\n   {\n     \"id\": 2,\n     \"name\": \"Jane Smith\",\n     \"email\": \"jane@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\"\n   }\n ]",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Show user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "You can get user by id. If not admin, you can get only yourself",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update user info",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"error\",\"email\":\"vmarvin@example.com\",\"password\":\":d9?|~-3`+bgOD[3%c\\\\j\",\"phone\":\"illum\",\"role\":\"admin\",\"tg_name\":\"fugit\"}"
+                        },
+                        "description": "You can see update only yourself if not admin",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\",\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete user by id",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "You can see delete only yourself if not admin",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{\n \"message\" : \"user deleted successfully\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get a list of all questionary",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questionary",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questionary"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"limit\":3,\"page\":76,\"name\":\"earum\",\"email\":\"elvie.ondricka@example.org\",\"phone\":\"non\",\"tg_name\":\"sit\"}"
+                        },
+                        "description": "Available only for admin",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "[{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\",\n     \"cat_photo\" \"http:\/\/example.com\/image.jpg\"\n}]",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get questionary by id",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questionary\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questionary\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "2",
+                                    "description": "The ID of the questionary."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Available only for admin or to see yourself",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\",\n     \"cat_photo\" \"http:\/\/example.com\/image.jpg\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update questionary",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questionary\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questionary\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "2",
+                                    "description": "The ID of the questionary."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "name",
+                                    "value": "qui",
+                                    "type": "text",
+                                    "description": "optional required The name of the user."
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "muhammad.bartoletti@example.com",
+                                    "type": "text",
+                                    "description": "optional required The email of the user."
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "F`{x6`&P+&r(T*J\/beL",
+                                    "type": "text",
+                                    "description": "optional The password of the user."
+                                },
+                                {
+                                    "key": "phone",
+                                    "value": "odit",
+                                    "type": "text",
+                                    "description": "optional The phone number of the user."
+                                },
+                                {
+                                    "key": "tg_name",
+                                    "value": "ut",
+                                    "type": "text",
+                                    "description": "optional The telegram username of the user."
+                                },
+                                {
+                                    "key": "catPhoto",
+                                    "src": [],
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "cat_photo",
+                                    "src": [],
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "_method",
+                                    "value": "PUT",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "description": "Available only for admin or to edit yourself",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\",\n     \"cat_photo\" \"http:\/\/example.com\/image.jpg\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update questionary",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questionary\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questionary\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "2",
+                                    "description": "The ID of the questionary."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Available only for admin or to edit yourself",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{\n     \"message\": \"successfully deleted\",\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Confirm questionary",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questionary\/:id\/confirm",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questionary\/:id\/confirm",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "2",
+                                    "description": "The ID of the questionary."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Admin can confirm questionary to create a user",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n\"message\": \"confirmed\",\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get jwt token",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"qlabadie@example.net\",\"password\":\"TPC{2G\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"email\": \"john@example.com\"\n     \"password\": \"mySecretPassword\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer token"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "You can't create user from api, you need to confirm questionary",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create questionary",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questionary",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questionary"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "name",
+                                    "value": "quasi",
+                                    "type": "text",
+                                    "description": "optional required The name of the user."
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "zieme.rowland@example.org",
+                                    "type": "text",
+                                    "description": "optional required The email of the user."
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "QBtYi0B>.@(6:[LTsi",
+                                    "type": "text",
+                                    "description": "optional The password of the user."
+                                },
+                                {
+                                    "key": "phone",
+                                    "value": "odit",
+                                    "type": "text",
+                                    "description": "optional The phone number of the user."
+                                },
+                                {
+                                    "key": "tg_name",
+                                    "value": "facere",
+                                    "type": "text",
+                                    "description": "optional The telegram username of the user."
+                                },
+                                {
+                                    "key": "catPhoto",
+                                    "src": [],
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "cat_photo",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "You can create questionary to create a user",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n\"id\": 1,\n\"name\": \"John Doe\",\n\"email\": \"john@example.com\"\n\"tg_name\": \"johnDoe\"\n\"phone\": \"9998887766\",\n\"cat_photo\" \"http:\/\/example.com\/image.jpg\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"error\": \"Unauthenticated\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n\"error\": \"Unauthorized\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}

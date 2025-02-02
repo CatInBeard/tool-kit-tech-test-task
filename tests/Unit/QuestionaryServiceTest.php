@@ -140,6 +140,7 @@ class QuestionaryServiceTest extends TestCase
             ->andReturn($questionaryMock);
 
         $user = Mockery::mock('alias:' . User::class);
+        $user->id = 1;
         $user->shouldReceive('isAdmin')
             ->once()
             ->andReturn(true);

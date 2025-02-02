@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class Questionary extends Model
 {
@@ -48,5 +49,10 @@ class Questionary extends Model
         /** @var User|null $currentUser */
         $currentUser = Auth::user();
         return $user->id === $currentUser->id;
+    }
+
+    public function getCatPhotoUrlAttribute()
+    {
+        return !is_null($this->cat_photo) ? Storage::url($this->cat_photo) : null;
     }
 }

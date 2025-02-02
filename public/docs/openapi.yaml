@@ -1,0 +1,834 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/auth:
+    delete:
+      summary: 'Invoke jwt token'
+      operationId: invokeJwtToken
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'User logged out successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'User logged out successfully'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Get jwt token'
+      operationId: getJwtToken
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n     \"email\": \"john@example.com\"\n     \"password\": \"mySecretPassword\"\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: qlabadie@example.net
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: 'TPC{2G'
+                  nullable: false
+              required:
+                - email
+                - password
+      security: []
+  /api/users/me:
+    get:
+      summary: 'Get my user'
+      operationId: getMyUser
+      description: 'You can see yourself'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\"\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      security: []
+  /api/users/me/questionary:
+    get:
+      summary: 'Get a list of users questionary'
+      operationId: getAListOfUsersQuestionary
+      description: 'You can see your questionary if not admin'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "[{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\",\n     \"cat_photo\" \"http://example.com/image.jpg\"\n}]"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      security: []
+  /api/users:
+    get:
+      summary: 'Get a list of users'
+      operationId: getAListOfUsers
+      description: 'Only users with admin role can use this endpoint'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "[\n   {\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\"\n   },\n   {\n     \"id\": 2,\n     \"name\": \"Jane Smith\",\n     \"email\": \"jane@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\"\n   }\n ]"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                limit:
+                  type: integer
+                  description: 'Must be at least 1. Must not be greater than 500.'
+                  example: 11
+                  nullable: false
+                page:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 3
+                  nullable: false
+                name:
+                  type: string
+                  description: ''
+                  example: qui
+                  nullable: true
+                email:
+                  type: string
+                  description: ''
+                  example: else.dibbert@example.com
+                  nullable: true
+                phone:
+                  type: string
+                  description: ''
+                  example: et
+                  nullable: true
+                tg_name:
+                  type: string
+                  description: ''
+                  example: quasi
+                  nullable: true
+      security: []
+    post:
+      summary: 'Create user'
+      operationId: createUser
+      description: "You can't create user from api, you need to confirm questionary"
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      security: []
+  '/api/users/{id}':
+    get:
+      summary: 'Show user'
+      operationId: showUser
+      description: 'You can get user by id. If not admin, you can get only yourself'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\"\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Update user info'
+      operationId: updateUserInfo
+      description: 'You can see update only yourself if not admin'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\",\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'optional required The name of the user.'
+                  example: error
+                  nullable: false
+                email:
+                  type: string
+                  description: 'optional required The email of the user.'
+                  example: vmarvin@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: 'optional The password of the user.'
+                  example: ':d9?|~-3`+bgOD[3%c\j'
+                  nullable: false
+                phone:
+                  type: string
+                  description: 'optional The phone number of the user.'
+                  example: illum
+                  nullable: true
+                role:
+                  type: string
+                  description: ''
+                  example: admin
+                  nullable: false
+                  enum:
+                    - client
+                    - admin
+                tg_name:
+                  type: string
+                  description: 'optional The telegram username of the user.'
+                  example: fugit
+                  nullable: true
+      security: []
+    delete:
+      summary: 'Delete user by id'
+      operationId: deleteUserById
+      description: 'You can see delete only yourself if not admin'
+      parameters: []
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the user.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/questionary:
+    get:
+      summary: 'Get a list of all questionary'
+      operationId: getAListOfAllQuestionary
+      description: 'Available only for admin'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "[{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\",\n     \"cat_photo\" \"http://example.com/image.jpg\"\n}]"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                limit:
+                  type: integer
+                  description: 'Must be at least 1. Must not be greater than 500.'
+                  example: 3
+                  nullable: false
+                page:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 76
+                  nullable: false
+                name:
+                  type: string
+                  description: ''
+                  example: earum
+                  nullable: true
+                email:
+                  type: string
+                  description: ''
+                  example: elvie.ondricka@example.org
+                  nullable: true
+                phone:
+                  type: string
+                  description: ''
+                  example: non
+                  nullable: true
+                tg_name:
+                  type: string
+                  description: ''
+                  example: sit
+                  nullable: true
+      security: []
+    post:
+      summary: 'Create questionary'
+      operationId: createQuestionary
+      description: 'You can create questionary to create a user'
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n\"id\": 1,\n\"name\": \"John Doe\",\n\"email\": \"john@example.com\"\n\"tg_name\": \"johnDoe\"\n\"phone\": \"9998887766\",\n\"cat_photo\" \"http://example.com/image.jpg\"\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'optional required The name of the user.'
+                  example: quasi
+                  nullable: false
+                email:
+                  type: string
+                  description: 'optional required The email of the user.'
+                  example: zieme.rowland@example.org
+                  nullable: false
+                password:
+                  type: string
+                  description: 'optional The password of the user.'
+                  example: 'QBtYi0B>.@(6:[LTsi'
+                  nullable: false
+                catPhoto:
+                  type: string
+                  format: binary
+                  description: 'Must be a file. Must not be greater than 8192 kilobytes.'
+                  nullable: true
+                phone:
+                  type: string
+                  description: 'optional The phone number of the user.'
+                  example: odit
+                  nullable: true
+                tg_name:
+                  type: string
+                  description: 'optional The telegram username of the user.'
+                  example: facere
+                  nullable: true
+                cat_photo:
+                  type: string
+                  format: binary
+                  description: 'The cat photo to upload. Must be an image and less than 8 MB.'
+                  nullable: false
+              required:
+                - cat_photo
+      security: []
+  '/api/questionary/{id}':
+    get:
+      summary: 'Get questionary by id'
+      operationId: getQuestionaryById
+      description: 'Available only for admin or to see yourself'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\",\n     \"cat_photo\" \"http://example.com/image.jpg\"\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Update questionary'
+      operationId: updateQuestionary
+      description: 'Available only for admin or to edit yourself'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n     \"id\": 1,\n     \"name\": \"John Doe\",\n     \"email\": \"john@example.com\"\n     \"tg_name\": \"johnDoe\"\n     \"phone\": \"9998887766\",\n     \"cat_photo\" \"http://example.com/image.jpg\"\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'optional required The name of the user.'
+                  example: qui
+                  nullable: false
+                email:
+                  type: string
+                  description: 'optional required The email of the user.'
+                  example: muhammad.bartoletti@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: 'optional The password of the user.'
+                  example: 'F`{x6`&P+&r(T*J/beL'
+                  nullable: false
+                catPhoto:
+                  type: string
+                  format: binary
+                  description: 'Must be a file. Must not be greater than 8192 kilobytes.'
+                  nullable: true
+                phone:
+                  type: string
+                  description: 'optional The phone number of the user.'
+                  example: odit
+                  nullable: true
+                tg_name:
+                  type: string
+                  description: 'optional The telegram username of the user.'
+                  example: ut
+                  nullable: true
+                cat_photo:
+                  type: string
+                  format: binary
+                  description: 'The cat photo to upload. Must be an image and less than 8 MB.'
+                  nullable: false
+              required:
+                - cat_photo
+      security: []
+    delete:
+      summary: 'Update questionary'
+      operationId: updateQuestionary
+      description: 'Available only for admin or to edit yourself'
+      parameters: []
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the questionary.'
+        example: 2
+        required: true
+        schema:
+          type: integer
+  '/api/questionary/{id}/confirm':
+    post:
+      summary: 'Confirm questionary'
+      operationId: confirmQuestionary
+      description: 'Admin can confirm questionary to create a user'
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n\"message\": \"confirmed\",\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthenticated
+                properties:
+                  error:
+                    type: string
+                    example: Unauthenticated
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the questionary.'
+        example: 2
+        required: true
+        schema:
+          type: integer
+tags:
+  -
+    name: Endpoints
+    description: ''

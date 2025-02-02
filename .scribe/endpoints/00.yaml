@@ -1,0 +1,1349 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - DELETE
+    uri: api/auth
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Invoke jwt token'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "message": "User logged out successfully"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/users/me
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get my user'
+      description: 'You can see yourself'
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "id": 1,
+               "name": "John Doe",
+               "email": "john@example.com"
+               "tg_name": "johnDoe"
+               "phone": "9998887766"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/users/me/questionary
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get a list of users questionary'
+      description: 'You can see your questionary if not admin'
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          [{
+               "id": 1,
+               "name": "John Doe",
+               "email": "john@example.com"
+               "tg_name": "johnDoe"
+               "phone": "9998887766",
+               "cat_photo" "http://example.com/image.jpg"
+          }]
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/users
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get a list of users'
+      description: 'Only users with admin role can use this endpoint'
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      limit:
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 500.'
+        required: false
+        example: 11
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      page:
+        name: page
+        description: 'Must be at least 1.'
+        required: false
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: false
+        example: qui
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      email:
+        name: email
+        description: ''
+        required: false
+        example: else.dibbert@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      phone:
+        name: phone
+        description: ''
+        required: false
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      tg_name:
+        name: tg_name
+        description: ''
+        required: false
+        example: quasi
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+    cleanBodyParameters:
+      limit: 11
+      page: 3
+      name: qui
+      email: else.dibbert@example.com
+      phone: et
+      tg_name: quasi
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          [
+             {
+               "id": 1,
+               "name": "John Doe",
+               "email": "john@example.com"
+               "tg_name": "johnDoe"
+               "phone": "9998887766"
+             },
+             {
+               "id": 2,
+               "name": "Jane Smith",
+               "email": "jane@example.com"
+               "tg_name": "johnDoe"
+               "phone": "9998887766"
+             }
+           ]
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/users/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Show user'
+      description: 'You can get user by id. If not admin, you can get only yourself'
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "id": 1,
+               "name": "John Doe",
+               "email": "john@example.com"
+               "tg_name": "johnDoe"
+               "phone": "9998887766"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/users/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update user info'
+      description: 'You can see update only yourself if not admin'
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'optional required The name of the user.'
+        required: false
+        example: error
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: 'optional required The email of the user.'
+        required: false
+        example: vmarvin@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: 'optional The password of the user.'
+        required: false
+        example: ':d9?|~-3`+bgOD[3%c\j'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      phone:
+        name: phone
+        description: 'optional The phone number of the user.'
+        required: false
+        example: illum
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      role:
+        name: role
+        description: ''
+        required: false
+        example: admin
+        type: string
+        enumValues:
+          - client
+          - admin
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      tg_name:
+        name: tg_name
+        description: 'optional The telegram username of the user.'
+        required: false
+        example: fugit
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+    cleanBodyParameters:
+      name: error
+      email: vmarvin@example.com
+      password: ':d9?|~-3`+bgOD[3%c\j'
+      phone: illum
+      role: admin
+      tg_name: fugit
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "id": 1,
+               "name": "John Doe",
+               "email": "john@example.com"
+               "tg_name": "johnDoe"
+               "phone": "9998887766",
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/users/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete user by id'
+      description: 'You can see delete only yourself if not admin'
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 204
+        content: |-
+          {
+           "message" : "user deleted successfully"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/questionary
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get a list of all questionary'
+      description: 'Available only for admin'
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      limit:
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 500.'
+        required: false
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      page:
+        name: page
+        description: 'Must be at least 1.'
+        required: false
+        example: 76
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: false
+        example: earum
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      email:
+        name: email
+        description: ''
+        required: false
+        example: elvie.ondricka@example.org
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      phone:
+        name: phone
+        description: ''
+        required: false
+        example: non
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      tg_name:
+        name: tg_name
+        description: ''
+        required: false
+        example: sit
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+    cleanBodyParameters:
+      limit: 3
+      page: 76
+      name: earum
+      email: elvie.ondricka@example.org
+      phone: non
+      tg_name: sit
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          [{
+               "id": 1,
+               "name": "John Doe",
+               "email": "john@example.com"
+               "tg_name": "johnDoe"
+               "phone": "9998887766",
+               "cat_photo" "http://example.com/image.jpg"
+          }]
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/questionary/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get questionary by id'
+      description: 'Available only for admin or to see yourself'
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the questionary.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "id": 1,
+               "name": "John Doe",
+               "email": "john@example.com"
+               "tg_name": "johnDoe"
+               "phone": "9998887766",
+               "cat_photo" "http://example.com/image.jpg"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/questionary/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update questionary'
+      description: 'Available only for admin or to edit yourself'
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the questionary.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'optional required The name of the user.'
+        required: false
+        example: qui
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: 'optional required The email of the user.'
+        required: false
+        example: muhammad.bartoletti@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: 'optional The password of the user.'
+        required: false
+        example: 'F`{x6`&P+&r(T*J/beL'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      catPhoto:
+        name: catPhoto
+        description: 'Must be a file. Must not be greater than 8192 kilobytes.'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      phone:
+        name: phone
+        description: 'optional The phone number of the user.'
+        required: false
+        example: odit
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      tg_name:
+        name: tg_name
+        description: 'optional The telegram username of the user.'
+        required: false
+        example: ut
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      cat_photo:
+        name: cat_photo
+        description: 'The cat photo to upload. Must be an image and less than 8 MB.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: qui
+      email: muhammad.bartoletti@example.com
+      password: 'F`{x6`&P+&r(T*J/beL'
+      phone: odit
+      tg_name: ut
+    fileParameters:
+      catPhoto: null
+      cat_photo: null
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "id": 1,
+               "name": "John Doe",
+               "email": "john@example.com"
+               "tg_name": "johnDoe"
+               "phone": "9998887766",
+               "cat_photo" "http://example.com/image.jpg"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/questionary/{id}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update questionary'
+      description: 'Available only for admin or to edit yourself'
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the questionary.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 204
+        content: |-
+          {
+               "message": "successfully deleted",
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/questionary/{id}/confirm'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Confirm questionary'
+      description: 'Admin can confirm questionary to create a user'
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the questionary.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+          "message": "confirmed",
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+          "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+          "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/auth
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get jwt token'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        name: email
+        description: 'Must be a valid email address.'
+        required: true
+        example: qlabadie@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: ''
+        required: true
+        example: 'TPC{2G'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      email: qlabadie@example.net
+      password: 'TPC{2G'
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "email": "john@example.com"
+               "password": "mySecretPassword"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/users
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create user'
+      description: "You can't create user from api, you need to confirm questionary"
+      authenticated: false
+      custom: []
+    headers:
+      Authorization: 'Bearer token'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/questionary
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create questionary'
+      description: 'You can create questionary to create a user'
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'optional required The name of the user.'
+        required: false
+        example: quasi
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: 'optional required The email of the user.'
+        required: false
+        example: zieme.rowland@example.org
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: 'optional The password of the user.'
+        required: false
+        example: 'QBtYi0B>.@(6:[LTsi'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      catPhoto:
+        name: catPhoto
+        description: 'Must be a file. Must not be greater than 8192 kilobytes.'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      phone:
+        name: phone
+        description: 'optional The phone number of the user.'
+        required: false
+        example: odit
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      tg_name:
+        name: tg_name
+        description: 'optional The telegram username of the user.'
+        required: false
+        example: facere
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      cat_photo:
+        name: cat_photo
+        description: 'The cat photo to upload. Must be an image and less than 8 MB.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: quasi
+      email: zieme.rowland@example.org
+      password: 'QBtYi0B>.@(6:[LTsi'
+      phone: odit
+      tg_name: facere
+    fileParameters:
+      catPhoto: null
+      cat_photo: null
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+          "id": 1,
+          "name": "John Doe",
+          "email": "john@example.com"
+          "tg_name": "johnDoe"
+          "phone": "9998887766",
+          "cat_photo" "http://example.com/image.jpg"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+          "error": "Unauthenticated"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+          "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
