@@ -22,7 +22,7 @@ class UserService
         $query = User::query();
 
         foreach ($filters as $field => $value) {
-            if (!empty($value)) {
+            if ($value !== null) {
                 $query->where($field, 'LIKE', '%' . $value . '%');
             }
         }
@@ -37,11 +37,10 @@ class UserService
     {
         $currentUser = Auth::user();
 
-        if(!$this->isAuthorizeToAccess($currentUser, $id)) {
+        if (!$this->isAuthorizeToAccess($currentUser, $id)) {
             throw new ErrorJsonException('Unauthorized to to access this user', 403);
         }
         return User::findOrFail($id);
-
     }
 
     /**
@@ -51,18 +50,17 @@ class UserService
     {
         $currentUser = Auth::user();
 
-        if(!$this->isAuthorizeToAccess($currentUser, $id)){
+        if (!$this->isAuthorizeToAccess($currentUser, $id)) {
             throw new ErrorJsonException('unauthorized to update this user', 403);
         }
 
         $user = User::findOrFail($id);
 
-        if(isset($data['role'])) {
-            if($currentUser->isAdmin()){
+        if (isset($data['role'])) {
+            if ($currentUser->isAdmin()) {
                 $user->role = $data['role'];
                 $user->save();
-            }
-            else{
+            } else {
                 throw new ErrorJsonException('unauthorized to update own role', 403);
             }
         }
@@ -96,9 +94,9 @@ class UserService
         return $currentUser->isAdmin() || $this->isCurrentUser($currentUser, $id);
     }
 
-    private function isCurrentUser($currentUser, $id): bool
+    private function isCurrentUser($currentUser, int $id): bool
     {
-        return $currentUser->id == $id;
+        return $currentUser->id === $id;
     }
 
     public function getMe()
@@ -112,6 +110,4 @@ class UserService
             ->find(Auth::user()->id)
             ->questionaries;
     }
-
-
 }

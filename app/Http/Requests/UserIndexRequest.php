@@ -14,7 +14,10 @@ class UserIndexRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::user()->isAdmin();
+        /** @var User|null $user */
+        $user = Auth::user();
+
+        return !is_null($user) && $user->isAdmin();
     }
 
     /**

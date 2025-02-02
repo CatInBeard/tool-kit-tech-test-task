@@ -25,4 +25,3 @@ class QuestionaryUpdateRequest extends FormRequest
         ];
     }
 }
-

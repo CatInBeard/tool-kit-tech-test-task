@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
+use Database\Factories\QuestionaryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Questionary extends Model
 {
-    use HasFactory, SoftDeletes;
+    /** @use HasFactory<QuestionaryFactory> */
+    use HasFactory;
+    use SoftDeletes;
+
     protected $fillable = [
         'name',
         'email',
@@ -38,7 +43,10 @@ class Questionary extends Model
         return $this->filters;
     }
 
-    public function isOwner(User $user): bool {
-        return $user->id == $this->user()->id;
+    public function isOwner(User $user): bool
+    {
+        /** @var User|null $currentUser */
+        $currentUser = Auth::user();
+        return $user->id === $currentUser->id;
     }
 }

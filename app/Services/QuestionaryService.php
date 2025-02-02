@@ -30,13 +30,13 @@ class QuestionaryService
     public function get($limit = 100, $page = 1, $filters = []): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         $currentUser = Auth::user();
-        if(!$currentUser->isAdmin()) {
+        if (!$currentUser->isAdmin()) {
             throw new ErrorJsonException('Unauthorized to list questionaries', 403);
         }
         $query = Questionary::query();
 
         foreach ($filters as $field => $value) {
-            if (!empty($value)) {
+            if ($value !== null) {
                 $query->where($field, 'LIKE', '%' . $value . '%');
             }
         }
@@ -65,7 +65,7 @@ class QuestionaryService
     {
         $questionary =  Questionary::findOrFail($id);
         $currentUser = Auth::user();
-        if (!$currentUser->isAdmin() && $currentUser->id != $questionary->user_id) {
+        if (!$currentUser->isAdmin() && $currentUser->id !== $questionary->user_id) {
             throw new ErrorJsonException('Unauthorized to update questionary', 403);
         }
 
@@ -83,7 +83,7 @@ class QuestionaryService
     public function delete($id): void
     {
         $currentUser = Auth::user();
-        if (!$currentUser->isAdmin()){
+        if (!$currentUser->isAdmin()) {
             throw new ErrorJsonException('Unauthorized to delete questionary', 403);
         }
 
@@ -98,7 +98,7 @@ class QuestionaryService
     public function confirm($id)
     {
         $currentUser = Auth::user();
-        if (!$currentUser->isAdmin()){
+        if (!$currentUser->isAdmin()) {
             throw new ErrorJsonException('Unauthorized to confirm', 403);
         }
 

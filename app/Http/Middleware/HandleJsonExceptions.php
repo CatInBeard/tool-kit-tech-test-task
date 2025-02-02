@@ -21,6 +21,5 @@ class HandleJsonExceptions
         } catch (CustomJsonException $e) {
             return $e->render();
         }
-
     }
 }

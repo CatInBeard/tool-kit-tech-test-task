@@ -24,12 +24,11 @@ class AuthController extends Controller
     {
 
         $token = $this->authService->login(
-            $request->email,
-            $request->password
+            $request->input('email'),
+            $request->input('password')
         );
 
         return response()->json(compact('token'));
-
     }
 
     /**

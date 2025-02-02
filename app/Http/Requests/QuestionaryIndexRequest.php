@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Exceptions\ErrorJsonException;
 use App\Models\Questionary;
+use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,10 @@ class QuestionaryIndexRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::user()->isAdmin();
+        /** @var User|null $user */
+        $user = Auth::user();
+
+        return !is_null($user) && $user->isAdmin();
     }
 
     /**

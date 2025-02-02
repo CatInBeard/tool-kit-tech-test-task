@@ -24,6 +24,4 @@ class UserUpdateRequest extends FormRequest
             'tg_name' => 'nullable|string|max:255',
         ];
     }
-
 }
-

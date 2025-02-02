@@ -9,7 +9,6 @@ use App\Exceptions\ErrorJsonException;
 
 class AuthService
 {
-
     /**
      * @throws ErrorJsonException
      */
@@ -29,12 +28,12 @@ class AuthService
     /**
      * @throws ErrorJsonException
      */
-    public function logout()
+    public function logout(): void
     {
         try {
+            // @phpstan-ignore-next-line
             JWTAuth::invalidate(JWTAuth::getToken());
-        }
-        catch (JWTException $e) {
+        } catch (JWTException $e) {
             throw new ErrorJsonException('could not invalidate token', 500);
         }
     }

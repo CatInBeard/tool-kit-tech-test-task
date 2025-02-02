@@ -34,12 +34,12 @@ class QuestionaryController extends Controller
             }
 
             $questionary = $this->questionaryService->create(
-                $request->name,
-                $request->email,
-                $request->password,
+                $request->input('name'),
+                $request->input('email'),
+                $request->input('password'),
                 $catPhotoPath,
-                $request->phone,
-                $request->tg_name
+                $request->input('phone'),
+                $request->input('tg_name')
             );
 
             return response()->json($questionary, 201);
@@ -72,6 +72,9 @@ class QuestionaryController extends Controller
         return response()->json($questionaries);
     }
 
+    /**
+     * @throws ErrorJsonException
+     */
     public function show($id): JsonResponse
     {
         $questionary = $this->questionaryService->getById($id);
@@ -102,8 +105,8 @@ class QuestionaryController extends Controller
     public function destroy($id): JsonResponse
     {
         try {
-            $questionary = $this->questionaryService->delete($id);
-            return response()->json($questionary, 204);
+            $this->questionaryService->delete($id);
+            return response()->json(["message" => "successfully deleted"], 204);
         } catch (ErrorJsonException $e) {
             return response()->json(['error' => $e->getMessage()], $e->getCode());
         }
