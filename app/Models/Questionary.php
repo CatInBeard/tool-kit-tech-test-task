@@ -32,6 +32,7 @@ class Questionary extends Model
         'email',
         'phone',
         'tg_name',
+        'isConfirmed',
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
