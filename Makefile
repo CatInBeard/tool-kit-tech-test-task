@@ -1,4 +1,4 @@
-.PHONY: help run stop migrate shell artisan db redis test all test-all copy-env generate-keys generate-app-key generate-jwt-secret composer-bootstrap build-frontend npm-install npm-build
+.PHONY: help run stop migrate shell artisan db redis test all test-all copy-env generate-keys generate-app-key generate-jwt-secret composer-bootstrap build-frontend npm-install npm-build storage-link
 
 help: ## Display available commands
 	@echo "Firstly you need to run to build docker, next you can run, finally, you need to run composer-install and migrate. You can do it all with 'all' command. when running, you can use other commands."
@@ -6,12 +6,15 @@ help: ## Display available commands
 	@echo "Usage:"
 	@grep -E '^[a-zA-Z_-]+: ## ' $(MAKEFILE_LIST) | sed 's/: ## / - /'
 
-all: composer-bootstrap copy-env run composer-install generate-keys migrate seed-db build-frontend ## Run from scratch
+all: composer-bootstrap copy-env run composer-install generate-keys migrate seed-db storage-link build-frontend ## Run from scratch
 
 copy-env: ## Copy env from template
 	@if [ ! -f .env ]; then \
 		cp .env.example .env; \
 	fi
+
+storage-link: ## Add access to storage
+	php artisan storage:link
 
 seed-db: ## Add db seed
 	./vendor/bin/sail artisan db:seed

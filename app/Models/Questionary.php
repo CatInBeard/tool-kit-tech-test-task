@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use _PHPStan_a54cdb067\Nette\Neon\Exception;
 use Database\Factories\QuestionaryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -51,8 +52,12 @@ class Questionary extends Model
         return $user->id === $currentUser->id;
     }
 
-    public function getCatPhotoUrlAttribute()
+    public function getCatPhotoAttribute($value)
     {
-        return !is_null($this->cat_photo) ? Storage::url($this->cat_photo) : null;
+        if ($value) {
+            return asset('storage/cat_photos/' . $value);
+        }
+
+        return null;
     }
 }
