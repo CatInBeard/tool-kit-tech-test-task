@@ -1,4 +1,4 @@
-.PHONY: help run stop migrate shell artisan db redis test all test-all
+.PHONY: help run stop migrate shell artisan db redis test all test-all copy-env generate-keys generate-app-key generate-jwt-secret composer-bootstrap
 
 help: ## Display available commands
 	@echo "Firstly you need to run to build docker, next you can run, finally, you need to run composer-install and migrate. You can do it all with 'all' command. when running, you can use other commands."
@@ -6,7 +6,21 @@ help: ## Display available commands
 	@echo "Usage:"
 	@grep -E '^[a-zA-Z_-]+: ## ' $(MAKEFILE_LIST) | sed 's/: ## / - /'
 
-all: composer-bootstrap run composer-install migrate## Run from scratch
+all: composer-bootstrap copy-env run composer-install generate-keys migrate## Run from scratch
+
+copy-env:
+	@if [ ! -f .env ]; then \
+		cp .env.example .env; \
+	fi
+
+generate-keys: generate-app-key generate-jwt-secret ## Generate app keys
+
+generate-app-key: ## Generate app key
+	./vendor/bin/sail artisan key:generate
+
+generate-jwt-secret: ## Generate jwt secret
+	./vendor/bin/sail artisan jwt:secret
+
 
 composer-bootstrap: ## You need to install sail from composer to run docker compose, for those add composer container
 	docker compose run --rm composer
@@ -32,7 +46,7 @@ tinker: ## Run php shell
 db: ## Run postgress shell
 	./vendor/bin/sail psql
 
-all-test: test analysis ## Run all possible tests
+test-all: test analysis ## Run all possible tests
 
 test: ## Run tests
 	docker compose exec -it laravel.test php artisan test
