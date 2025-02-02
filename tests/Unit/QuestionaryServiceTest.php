@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\QuestionaryService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Mockery;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
@@ -141,10 +142,15 @@ class QuestionaryServiceTest extends TestCase
 
         $user = Mockery::mock('alias:' . User::class);
         $user->id = 1;
+        $user->email = 'test@example.com';
         $user->shouldReceive('isAdmin')
             ->once()
             ->andReturn(true);
         Auth::shouldReceive('user')->andReturn($user);
+
+        $mail = Mockery::mock('alias:' . Mail::class);
+        $mail->shouldReceive('to')->andReturn($mail);
+        $mail->shouldReceive('queue')->andReturn($mail);
 
         $user->shouldReceive('createFromQuestionary')
             ->once()
