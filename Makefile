@@ -1,4 +1,4 @@
-.PHONY: help run stop migrate shell artisan db redis test all test-all copy-env generate-keys generate-app-key generate-jwt-secret composer-bootstrap
+.PHONY: help run stop migrate shell artisan db redis test all test-all copy-env generate-keys generate-app-key generate-jwt-secret composer-bootstrap build-frontend npm-install npm-build
 
 help: ## Display available commands
 	@echo "Firstly you need to run to build docker, next you can run, finally, you need to run composer-install and migrate. You can do it all with 'all' command. when running, you can use other commands."
@@ -6,12 +6,15 @@ help: ## Display available commands
 	@echo "Usage:"
 	@grep -E '^[a-zA-Z_-]+: ## ' $(MAKEFILE_LIST) | sed 's/: ## / - /'
 
-all: composer-bootstrap copy-env run composer-install generate-keys migrate## Run from scratch
+all: composer-bootstrap copy-env run composer-install generate-keys migrate seed-db build-frontend ## Run from scratch
 
-copy-env:
+copy-env: ## Copy env from template
 	@if [ ! -f .env ]; then \
 		cp .env.example .env; \
 	fi
+
+seed-db: ## Add db seed
+	./vendor/bin/sail artisan db:seed
 
 generate-keys: generate-app-key generate-jwt-secret ## Generate app keys
 
@@ -39,6 +42,14 @@ migrate: ## Migrate database
 
 shell: ## Run php container shell
 	docker compose exec -it  laravel.test bash
+
+build-frontend: npm-install npm-build ## Build frontend
+
+npm-install: ## Run npm install
+	docker compose exec -it laravel.test npm install
+
+npm-build: ## Run npm build
+	docker compose exec -it laravel.test npm run build
 
 tinker: ## Run php shell
 	docker compose exec -it laravel.test php artisan tinker
