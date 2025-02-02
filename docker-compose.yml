@@ -81,6 +81,13 @@ services:
             - '/dev/shm:/dev/shm'
         networks:
             - sail
+    composer:
+        image: 'composer:2.8'
+        working_dir: '/app'
+        volumes:
+            - '.:/app'
+        command: [ 'composer', 'install' ]
+
 networks:
     sail:
         driver: bridge
