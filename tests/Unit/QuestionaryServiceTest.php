@@ -139,6 +139,7 @@ class QuestionaryServiceTest extends TestCase
         $questionaryMock->shouldReceive('findOrFail')
             ->once()
             ->andReturn($questionaryMock);
+        $questionaryMock->shouldReceive('save');
 
         $user = Mockery::mock('alias:' . User::class);
         $user->id = 1;

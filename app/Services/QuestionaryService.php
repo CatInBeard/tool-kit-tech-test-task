@@ -38,7 +38,9 @@ class QuestionaryService
         $query = Questionary::query();
 
         foreach ($filters as $field => $value) {
-            if ($value !== null) {
+            if($field === 'isConfirmed'){
+                $query->where($field, (bool) $value);
+            } else if ($value !== null) {
                 $query->where($field, 'LIKE', '%' . $value . '%');
             }
         }
@@ -111,5 +113,7 @@ class QuestionaryService
         Mail::to($user->email)->queue(new UserRegistered($user));
 
         $questionary->user_id = $user->id;
+        $questionary->isConfirmed = true;
+        $questionary->save();
     }
 }
