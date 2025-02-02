@@ -104,6 +104,8 @@ class QuestionaryService
 
         $questionary =  Questionary::findOrFail($id);
 
-        return User::createFromQuestionary($questionary);
+        $user = User::createFromQuestionary($questionary);
+
+        $questionary->user_id = $user->id;
     }
 }

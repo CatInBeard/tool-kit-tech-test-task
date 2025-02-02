@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Exceptions\ErrorJsonException;
 use App\Models\User;
-use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,9 +17,6 @@ class UserService
         throw new ErrorJsonException('could not create user, you should use questionary instead', 403);
     }
 
-    /**
-     * @throws ErrorJsonException
-     */
     public function get($limit = 100, $page = 1, $filters = []): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         $query = User::query();
@@ -40,12 +36,11 @@ class UserService
     public function getById($id)
     {
         $currentUser = Auth::user();
-        $user = User::findOrFail($id);
-        if(!$this->isAuthorizeToAccess($currentUser, $user)){
+
+        if(!$this->isAuthorizeToAccess($currentUser, $id)) {
             throw new ErrorJsonException('Unauthorized to to access this user', 403);
         }
-
-        return $user;
+        return User::findOrFail($id);
 
     }
 
@@ -54,11 +49,22 @@ class UserService
      */
     public function update($id, array $data)
     {
-        $user = $this->getById($id);
         $currentUser = Auth::user();
 
-        if(!$this->isAuthorizeToAccess($currentUser, $user)){
+        if(!$this->isAuthorizeToAccess($currentUser, $id)){
             throw new ErrorJsonException('unauthorized to update this user', 403);
+        }
+
+        $user = User::findOrFail($id);
+
+        if(isset($data['role'])) {
+            if($currentUser->isAdmin()){
+                $user->role = $data['role'];
+                $user->save();
+            }
+            else{
+                throw new ErrorJsonException('unauthorized to update own role', 403);
+            }
         }
 
         if (isset($data['password'])) {
@@ -74,25 +80,38 @@ class UserService
      */
     public function delete($id)
     {
-        $user = $this->getById($id);
         $currentUser = Auth::user();
 
-        if (!$currentUser->isAdmin()) {
+        if (!$this->isAuthorizeToAccess($currentUser, $id)) {
             throw new ErrorJsonException('Unauthorized to delete this user', 403);
         }
 
+        $user = User::findOrFail($id);
         $user->delete();
         return $user;
     }
 
-    private function isAuthorizeToAccess($currentUser, $user): bool
+    private function isAuthorizeToAccess($currentUser, $id): bool
     {
-        return $this->isCurrentUser($currentUser, $user) && $currentUser->isAdmin();
+        return $currentUser->isAdmin() || $this->isCurrentUser($currentUser, $id);
     }
 
-    private function isCurrentUser($currentUser, $user): bool
+    private function isCurrentUser($currentUser, $id): bool
     {
-        return $currentUser->id === $user->id;
+        return $currentUser->id == $id;
     }
+
+    public function getMe()
+    {
+        return Auth::user();
+    }
+
+    public function getMyQuestionary()
+    {
+        return User::with('questionaries')
+            ->find(Auth::user()->id)
+            ->questionaries;
+    }
+
 
 }

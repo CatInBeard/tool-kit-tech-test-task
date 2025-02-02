@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Questionary;
+use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserIndexRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UserIndexRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::user()->isAdmin();
     }
 
     /**
@@ -35,7 +36,7 @@ class UserIndexRequest extends FormRequest
     public function getFilterRules(): array
     {
         $rules = [];
-        $filterFields = (new Questionary())->getFilters();
+        $filterFields = (new User())->getFilters();
 
         foreach ($filterFields as $field) {
             $rules[$field] = 'nullable|string';
